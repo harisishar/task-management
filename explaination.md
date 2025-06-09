@@ -130,6 +130,66 @@ int Task::nextId = 1;  // Initialize static member
 3. **`TaskManager.h`** ✅ - Business logic layer
 4. **`web_server.cpp`** ✅ - Web interface
 
+### Optional Files:
+- **`main.cpp`** ❌ - Only needed for console demonstration
+
+### 6. **Makefile** (Build Configuration)
+**Purpose**: Automates the compilation and linking process for the C++ project, handling cross-platform builds and dependencies.
+
+**Key Components**:
+- **Compiler Configuration**:
+  - `CXX = g++`: Specifies the C++ compiler
+  - `CXXFLAGS = -std=c++17 -Wall -Wextra -O2`: Compiler flags for C++17 standard, warnings, and optimization
+  - `LDFLAGS = -pthread`: Linker flags for threading support
+
+- **Cross-Platform Support**:
+  ```makefile
+  ifeq ($(OS),Windows_NT)
+      LDFLAGS += -lws2_32    # Windows socket library
+      TARGET = task_manager.exe
+      WEB_TARGET = web_server.exe
+  else
+      TARGET = task_manager    # Unix/Linux executables
+      WEB_TARGET = web_server
+  endif
+  ```
+
+- **Source File Management**:
+  - `TASK_SOURCES`: Files needed for console application (main.cpp, Task.cpp, TaskManager.cpp)
+  - `WEB_SOURCES`: Files needed for web server (web_server.cpp, Task.cpp)
+  - Automatically generates object file lists from source files
+
+- **Build Targets**:
+  - `all`: Builds both console and web applications
+  - `$(TARGET)`: Builds the console application
+  - `$(WEB_TARGET)`: Builds the web server
+  - `%.o: %.cpp`: Pattern rule for compiling source files to object files
+
+- **Utility Targets**:
+  - `clean`: Removes compiled files (cross-platform compatible)
+  - `run-console`: Builds and runs the console application
+  - `run-web`: Builds and runs the web server
+  - `install-deps`: Placeholder (no external dependencies needed)
+
+**Why it's needed**: 
+- **Automation**: Eliminates need to manually compile each file
+- **Dependency Management**: Automatically recompiles only changed files
+- **Cross-Platform**: Handles Windows vs Unix differences automatically
+- **Convenience**: Provides easy commands like `make run-web`
+- **Maintenance**: Centralizes build configuration
+
+**Usage Examples**:
+```bash
+make all           # Build both applications
+make run-web       # Build and run web server
+make run-console   # Build and run console app
+make clean         # Remove all compiled files
+```
+
+**Note**: While not strictly required (you could compile manually), the Makefile is highly recommended for:
+- Efficient development workflow
+- Consistent builds across different systems
+- Easy project sharing and deployment
 
 ## Why Header Files (.h) are Needed
 
