@@ -121,9 +121,3 @@ The htmx frontend provides:
 - **Dynamic task management** with instant feedback
 - **Container visualization** showing which STL container stores each task
 - **Responsive design** that works on all devices
-
----
-
-**Happy Learning! 🎓** 
-
-Explore the power of STL containers and see how `std::vector` and `std::deque` can solve real-world problems efficiently! 
